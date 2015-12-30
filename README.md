@@ -1,11 +1,13 @@
 # NextRide Brampton Transit API
-A full-featured web API for Brampton Transit services. As it stands, it requires self-hosting. See below for instructions on usage. 
+A full-featured web API for Brampton Transit's NextRide service. Self host to use (see instructions below). Scrapes the NextRide [mobile site](http://nextride.brampton.ca/mob/SearchBy.aspx) for all schedules and bus information.
 
 ## Usage
 
 ```
 /api?code={stop_code}
 ```
+
+Find `stop_code` at [NextRide](http://nextride.brampton.ca/RealTime.aspx) (find by route) and transit stops.
 
 ## Requirements
 - Node.js + npm
