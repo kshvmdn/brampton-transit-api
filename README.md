@@ -1,5 +1,5 @@
 # NextRide Brampton Transit API
-A full-featured web API for Brampton Transit services. As it stands, it must be self-hosted. See below for instructions on usage. 
+A full-featured web API for Brampton Transit services. As it stands, it requires self-hosting. See below for instructions on usage. 
 
 ## Usage
 
@@ -13,15 +13,8 @@ A full-featured web API for Brampton Transit services. As it stands, it must be 
 
 ## Running
 
-Clone/fork the project & cd to proj.
-```
-git clone https://github.com/kshvmdn/NextRideAPI.git && cd NextRideAPI
-```
-Install python requirements & node dependencies
-```
-pip3 install -r scraper/requirements.txt && npm install
-```
-Run project
-```
-node start
-```
+1. Clone/fork & cd to dir. `git clone https://github.com/kshvmdn/NextRideAPI.git && cd NextRideAPI`
+
+2. Install python requirements & node dependencies `pip3 install -r scraper/requirements.txt && npm install`
+
+3. Run project `node start`
