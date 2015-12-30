@@ -4,7 +4,7 @@ A full-featured web API for Brampton Transit services. As it stands, it must be 
 ## Usage
 
 ```
-/api?code={code}
+/api?code={stop_code}
 ```
 
 ## Requirements
