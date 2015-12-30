@@ -19,7 +19,7 @@ git clone https://github.com/kshvmdn/NextRideAPI.git && cd NextRideAPI
 ```
 Install python requirements & node dependencies
 ```
-pip3 install -r /scraper/requirements.txt && npm install
+pip3 install -r scraper/requirements.txt && npm install
 ```
 Run project
 ```
