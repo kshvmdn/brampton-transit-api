@@ -1,5 +1,5 @@
 # NextRide Brampton Transit API
-A full-featured web API for Brampton Transit services. As it stands, the API is required to be self-hosted. See below for instructions on usage. 
+A full-featured web API for Brampton Transit services. As it stands, it must be self-hosted. See below for instructions on usage. 
 
 ## Usage
 
