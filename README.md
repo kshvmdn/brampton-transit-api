@@ -17,15 +17,15 @@ Find `stop_code` at [NextRide](http://nextride.brampton.ca/RealTime.aspx) (find 
 
 Clone/fork proj. & cd to directory
 ```
-git clone https://github.com/kshvmdn/NextRideAPI.git && cd NextRideAPI
+$ git clone https://github.com/kshvmdn/NextRideAPI.git && cd NextRideAPI
 ```
 
 Install python requirements + node dependencies
 ```
-pip3 install -r scraper/requirements.txt && npm install
+$ pip3 install -r scraper/requirements.txt
+$ cd app && npm install
 ```
-
 Run project
 ```
-node start
+$ node start
 ```
