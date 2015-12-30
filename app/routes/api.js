@@ -11,6 +11,17 @@ router.get('/', function(req, res, next) {
 	exec('python3 main.py ' + stop, {cwd: '../scraper'}, function(error, stdout, stderr) {
 		console.log('stdout: ' + stdout);
 		console.log('stderr: ' + stderr);
+		if (error !== null) {
+			console.log('exec error: ' + error);
+			return;
+		} else {
+			if (JSON.parse(stdout) != null) {
+				res.json({'schedule': JSON.parse(stdout), 'meta': {'status': 200, 'message': 'OK'}});
+				return;
+			} else {
+				res.json({'status': 404, 'message': 'No stop found for given code.'});
+				return;
+			}
 		}
 	});
 });
