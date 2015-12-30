@@ -13,8 +13,17 @@ A full-featured web API for Brampton Transit services. As it stands, it requires
 
 ## Running
 
-1. Clone/fork & cd to dir. `git clone https://github.com/kshvmdn/NextRideAPI.git && cd NextRideAPI`
+Clone/fork proj. & cd to directory
+```
+git clone https://github.com/kshvmdn/NextRideAPI.git && cd NextRideAPI
+```
 
-2. Install python requirements & node dependencies `pip3 install -r scraper/requirements.txt && npm install`
+Install python requirements + node dependencies
+```
+pip3 install -r scraper/requirements.txt && npm install
+```
 
-3. Run project `node start`
+Run project
+```
+node start
+```
