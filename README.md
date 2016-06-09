@@ -10,19 +10,12 @@ A scraper and web API for Brampton Transit's Next Ride service. Requires self-ho
 
 ## API
 
-### Usage
-
-```
-/api/:stop
-```
-
-Find `stop` with [Next Ride](http://nextride.brampton.ca/RealTime.aspx).
-
 ### Requirements
+
 - Node.js (^4.0.0)
 - Python (^2.7)
 
-### Running
+### Getting started
 
 - Clone/fork proj. & cd to directory
     
@@ -42,10 +35,18 @@ Find `stop` with [Next Ride](http://nextride.brampton.ca/RealTime.aspx).
     $ node start
     ```
 
+### Usage
+
+```
+/api/stop/:stop
+```
+
+Find `stop` with [Next Ride](http://nextride.brampton.ca/RealTime.aspx).
+
 ### Example
 
 ```
-http://localhost:8080/api/3498
+http://localhost:8080/api/stop/3498
 ```
 
 ```json
