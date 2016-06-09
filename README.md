@@ -1,6 +1,6 @@
 # next-ride-api
 
-A scraper and web API for Brampton Transit's Next Ride service. Requires self-hosting. 
+A scraper and web API for Brampton Transit's Next Ride service. Requires self-hosting.
 
 ## Scraper
 
@@ -17,19 +17,19 @@ A scraper and web API for Brampton Transit's Next Ride service. Requires self-ho
 
 ### Getting started
 
-- Clone/fork proj. & cd to directory
-    
+- Clone/fork proj. & cd to directory.
+
     ```sh
     $ git clone https://github.com/kshvmdn/next-ride-api.git && cd next-ride-api
     ```
 
-- Install python requirements & node deps
-    
+- Install python requirements & node deps.
+
     ```sh
     $ pip install -r ./lib/scraper/requirements.txt && npm install
     ```
 
-- Run, app running at localhost:8080 (or your env PORT)
+- Run app, listening at localhost:8080 (or your env PORT).
 
     ```sh
     $ node start

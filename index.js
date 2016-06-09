@@ -2,10 +2,10 @@
 const express = require('express');
 const app = express();
 
-const api = require('./lib');
-const port = process.env.PORT || 8080;
+const routes = require('./routes');
+const port = process.env.PORT || 3000;
 
-app.use('/api', api);
+app.use('/', routes);
 
 app.use((req, res, next) => {
   let err = new Error('Not Found');
@@ -15,13 +15,16 @@ app.use((req, res, next) => {
 
 app.use((err, req, res, next) => {
   err.status = err.status || 500;
-  res.status(err.status);
-  res.json({
-    'error': {
-      'message': err.message,
-      'status': err.status
+
+  let response = {
+    data: null,
+    meta: {
+      status: err.status,
+      message: err.message
     }
-  })
+  };
+
+  res.status(err.status).json(response);
 });
 
 app.listen(port, () => console.log(`Listening at http://localhost:${port}.`));

@@ -1,8 +1,7 @@
-from bs4 import BeautifulSoup
-from collections import OrderedDict
-
 import requests
 
+from bs4 import BeautifulSoup
+from collections import OrderedDict
 from constants import *
 
 
@@ -58,11 +57,20 @@ def parse(resp):
         route, direction = [x.strip() for x in td[0].text.split(' to ')]
         route = route.replace('Route', '').strip()
 
-        data['routes'].append(OrderedDict([
-            ('direction', direction),
-            ('route', route.replace('Route', '').strip()),
-            ('time', td[1].text.strip())
-        ]))
+        time = td[1].text.strip()
+
+        match = next((r for r in data['routes']
+                      if r['direction'] == direction and r['route'] == route),
+                     None)
+
+        if not match:
+            data['routes'].append(OrderedDict([
+                ('direction', direction),
+                ('route', route),
+                ('times', [time])
+            ]))
+        else:
+            match['times'].append(time)
 
     return data
 
@@ -73,13 +81,13 @@ def get_viewstate():
 
     payload = {}
 
-    for name in VIEWSTATE, VIEWSTATEGENERATOR:
-        element = soup.find(id=name)
+    for key in VIEWSTATE, VIEWSTATEGENERATOR:
+        element = soup.find(id=key)
 
         if not element:
             return None
 
-        payload[name] = element['value']
+        payload[key] = element['value']
 
     return payload
 
@@ -88,4 +96,7 @@ if __name__ == '__main__':
     import sys
     import json
 
-    print(json.dumps(scrape(sys.argv[1]), indent=2))
+    stop = sys.argv[1]
+    data = scrape(stop)
+    dump = json.dumps(data)
+    print(dump)
