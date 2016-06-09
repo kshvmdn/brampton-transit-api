@@ -42,6 +42,38 @@ Find `stop` with [Next Ride](http://nextride.brampton.ca/RealTime.aspx).
     $ node start
     ```
 
+### Example
+
+```
+http://localhost:8080/api/3498
+```
+
+```json
+{
+  "stop": {
+    "id": "3498",
+    "name": "Torbram Rd s/of Father Tobin Rd"
+  },
+  "routes": [
+    {
+      "direction": "Torbram SB",
+      "route": "14",
+      "time": "7 min(s)"
+    },
+    {
+      "direction": "Torbram SB",
+      "route": "14",
+      "time": "11:13 PM"
+    },
+    {
+      "direction": "Torbram SB",
+      "route": "14",
+      "time": "11:43 PM"
+    }
+  ]
+}
+```
+
 ## Contribute
 
 Feel free to open [issues](https://github.com/kshvmdn/next-ride-api/issues) for requests/questions or submit [PRs](https://github.com/kshvmdn/next-ride-api/pulls) with features/fixes.
