@@ -1,31 +1,47 @@
-# NextRide Brampton Transit API
-A full-featured web API for Brampton Transit's NextRide service. Self host to use (see instructions below). Scrapes the NextRide [mobile site](http://nextride.brampton.ca/mob/SearchBy.aspx) for all schedules and bus information.
+# next-ride-api
 
-## Usage
+A scraper and web API for Brampton Transit's Next Ride service. Requires self-hosting. 
+
+## Scraper
+
+- Data source: Next Ride [mobile site](http://nextride.brampton.ca/mob/SearchBy.aspx).
+
+- Scraper is located in [./lib/scraper][lib/scraper].
+
+## API
+
+### Usage
 
 ```
-/api?code={stop_code}
-```
-
-Find `stop_code` at [NextRide](http://nextride.brampton.ca/RealTime.aspx) (find by route) and transit stops.
-
-## Requirements
-- Node.js + npm
-- Python 3
-
-## Running
-
-Clone/fork proj. & cd to directory
-```
-$ git clone https://github.com/kshvmdn/NextRideAPI.git && cd NextRideAPI
+/api/:stop
 ```
 
-Install python requirements + node dependencies
-```
-$ pip3 install -r scraper/requirements.txt
-$ cd app && npm install
-```
-Run project
-```
-$ node start
-```
+Find `stop` with [Next Ride](http://nextride.brampton.ca/RealTime.aspx).
+
+### Requirements
+- Node.js (^4.0.0)
+- Python (^2.7)
+
+### Running
+
+- Clone/fork proj. & cd to directory
+    
+    ```
+    $ git clone https://github.com/kshvmdn/next-ride-api.git && cd next-ride-api
+    ```
+
+- Install python requirements & node deps
+    
+    ```
+    $ pip install -r ./lib/scraper/requirements.txt && npm install
+    ```
+
+- Run, app running at localhost:8080 (or your env PORT)
+
+    ```
+    $ node start
+    ```
+
+## Contribute
+
+Feel free to open [issues](https://github.com/kshvmdn/next-ride-api/issues) for requests/questions or submit [PRs](https://github.com/kshvmdn/next-ride-api/pulls) with features/fixes.
