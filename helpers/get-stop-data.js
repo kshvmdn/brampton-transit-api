@@ -1,6 +1,6 @@
 const PythonShell = require('python-shell');
 
-module.exports = stop => {
+module.exports = (stop) => {
   return new Promise((resolve, reject) => {
     let options = {
       mode: 'json',
@@ -14,9 +14,9 @@ module.exports = stop => {
       let result = results && results[0] ? results[0] : null;
 
       if (err || !result) {
-        let e = err || new Error(`Can't get data for stop ${stop}.`);
+        let e = err || new Error(`Failed to retrieve data for stop ${stop}.`);
         e.status = err && err.status ? err.status : 400;
-        reject(e);
+        return reject(e);
       }
 
       resolve(result);

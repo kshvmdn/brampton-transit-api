@@ -3,9 +3,10 @@ const express = require('express');
 const app = express();
 
 const routes = require('./routes');
-const port = process.env.PORT || 3000;
-
 app.use('/', routes);
+
+const port = process.env.PORT || 3000;
+const address = process.env.ADDRESS || '127.0.0.1';
 
 app.use((req, res, next) => {
   let err = new Error('Not Found');
@@ -14,19 +15,19 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  err.status = err.status || 500;
+  let message = err && err.message ? err.message : 'Unexpected Error';
+  let status = err && err.status ? err.status : 500;
 
   let response = {
     data: null,
-    meta: {
-      status: err.status,
-      message: err.message
-    }
+    meta: { status, message }
   };
 
-  res.status(err.status).json(response);
+  res.status(status).json(response);
 });
 
-app.listen(port, () => console.log(`Listening at http://localhost:${port}.`));
+const server = app.listen(port, address, () => {
+  console.log(`Listening @ http://${server.address().address}:${server.address().port}.`);
+});
 
 module.exports = app;
