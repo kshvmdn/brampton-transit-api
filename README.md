@@ -48,10 +48,7 @@ Find `stop` through [Next Ride](http://nextride.brampton.ca/RealTime.aspx) (endp
 http://localhost:8080/api/stop/3498
 ```
 
-```json
-{
-}
-```
+_Pending_
 
 ## Contribute
 
