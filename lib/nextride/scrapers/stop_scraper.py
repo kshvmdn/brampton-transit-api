@@ -2,7 +2,17 @@ import requests
 
 from bs4 import BeautifulSoup
 from collections import OrderedDict
-from constants import *
+
+BASE_URL = 'http://nextride.brampton.ca/mob/SearchBy.aspx'
+
+VIEWSTATE = '__VIEWSTATE'
+VIEWSTATEGENERATOR = '__VIEWSTATEGENERATOR'
+STOP_INPUT = 'ctl00$mainPanel$searchbyStop$txtStop'
+FORM_SUBMIT = 'ctl00$mainPanel$btnGetRealtimeSchedule'
+
+DESCRIPTION = 'ctl00_mainPanel_lblStopDescription'
+RESULTS = 'ctl00_mainPanel_gvSearchResult'
+ERROR = 'ctl00_mainPanel_lblError'
 
 
 def scrape(stop):
@@ -35,8 +45,10 @@ def parse(resp):
     ])
 
     description = soup.find(id=DESCRIPTION)
+    results = soup.find(id=RESULTS)
+    error = soup.find(id=ERROR)
 
-    if not description:
+    if error or not (description and results):
         return None
 
     stop_number, stop_name = [x.strip() for x in description.text.split(', ')]
@@ -46,15 +58,14 @@ def parse(resp):
         ('name', stop_name)
     ])
 
-    results = soup.find(id=RESULTS)
-
-    if not results:
-        return None
-
     for tr in results.find_all('tr')[1:]:
         td = tr.find_all('td')
 
-        route, direction = [x.strip() for x in td[0].text.split(' to ')]
+        if any('no service' in c.text.lower() for c in td):
+            # No service, return dataset with empty routes list
+            return data
+
+        route, direction = [c.strip() for c in td[0].text.split(' to ')]
         route = route.replace('Route', '').strip()
 
         time = td[1].text.strip()
