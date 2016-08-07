@@ -1,29 +1,29 @@
-#!/usr/bin/env node
 const express = require('express');
+const hbs = require('express-handlebars');
+const morgan = require('morgan');
+const path = require('path');
+
+const api = require('./api');
+
+const port = process.env.PORT || 3001;
+const address = process.env.ADDRESS || 'localhost';
+
 const app = express();
 
-const routes = require('./routes');
-app.use('/', routes);
+app.engine('handlebars', hbs({ defaultLayout: 'single' }));
+app.set('view engine', 'handlebars');
 
-const port = process.env.PORT || 3000;
-const address = process.env.ADDRESS || '127.0.0.1';
+app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res, next) => {
-  let err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.get('/', (req, res) => {
+  res.render('home', {});
 });
 
-app.use((err, req, res, next) => {
-  let message = err && err.message ? err.message : 'Unexpected Error';
-  let status = err && err.status ? err.status : 500;
+app.use('/api', api);
 
-  let response = {
-    data: null,
-    meta: { status, message }
-  };
-
-  res.status(status).json(response);
+app.get('/*', (req, res) => {
+  res.redirect('/');
 });
 
 const server = app.listen(port, address, () => {

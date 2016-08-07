@@ -1,8 +1,12 @@
 {
   "name": "next-ride-api",
-  "version": "0.0.0",
+  "description": "Scraper and API for the Brampton Transit Next Ride service.",
+  "version": "0.0.1",
   "scripts": {
-    "watch": "./node_modules/.bin/nodemon .",
+    "build-scss": "node-sass --include-path scss public/scss/main.scss public/stylesheets/main.css --output-style compressed",
+    "lint": "eslint index.js api/ utils/",
+    "watch": "nodemon .",
+    "watch-scss": "npm run build-scss -- -w",
     "start": "node ."
   },
   "author": {
@@ -16,10 +20,16 @@
     "url": "https://github.com/kshvmdn/next-ride-api"
   },
   "dependencies": {
-    "express": "^4.13.4",
+    "express": "^4.14.0",
+    "express-handlebars": "^3.0.0",
+    "morgan": "^1.7.0",
     "python-shell": "^0.4.0"
   },
   "devDependencies": {
+    "eslint": "^3.2.2",
+    "eslint-config-airbnb": "^10.0.0",
+    "eslint-plugin-import": "^1.12.0",
+    "node-sass": "^3.8.0",
     "nodemon": "^1.9.2"
   }
 }
