@@ -1,8 +1,13 @@
+"""
+Scrape a list of stops for each route.
+"""
+
 import requests
 
 from bs4 import BeautifulSoup
 from collections import OrderedDict
-from pprint import pprint
+
+from utils.viewstate import get_viewstate
 
 BASE_URL = 'http://nextride.brampton.ca/RealTime.aspx'
 
@@ -11,10 +16,8 @@ VIEWSTATE_GENERATOR = '__VIEWSTATEGENERATOR'
 EVENT_TARGET = '__EVENTTARGET'
 EVENT_ARGUMENT = '__EVENTARGUMENT'
 
-ROUTE_DROPDOWN_INPUT = 'ctl00$mainPanel$MainPanel1$SearchStop1$DropDownRoute'
-ROUTE_DROPDOWN_ID = 'ctl00_mainPanel_MainPanel1_SearchStop1_DropDownRoute'
-STOP_DROPDOWN_INPUT = 'ctl00$mainPanel$MainPanel1$SearchStop1$DropDownStop'
-STOP_DROPDOWN_ID = 'ctl00_mainPanel_MainPanel1_SearchStop1_DropDownStop'
+ROUTE_DROPDOWN = 'ctl00$mainPanel$MainPanel1$SearchStop1$DropDownRoute'
+STOP_DROPDOWN = 'ctl00$mainPanel$MainPanel1$SearchStop1$DropDownStop'
 
 
 def scrape():
@@ -25,12 +28,16 @@ def get(route=None):
     if not route:
         return requests.get(BASE_URL)
 
-    payload = {
-        ROUTE_DROPDOWN_INPUT: route,
-        EVENT_TARGET: ROUTE_DROPDOWN_INPUT,
+    payload = get_viewstate(BASE_URL, VIEWSTATE, VIEWSTATE_GENERATOR)
+
+    if not payload:
+        return
+
+    payload.update({
+        ROUTE_DROPDOWN: route,
+        EVENT_TARGET: ROUTE_DROPDOWN,
         EVENT_ARGUMENT: ''
-    }
-    payload.update(get_viewstate())
+    })
 
     return requests.post(BASE_URL, data=payload)
 
@@ -51,12 +58,9 @@ def parse(resp):
     for route_option in route_select.find_all('option')[1:]:
         route = route_option['value']
 
-        if not route:
-            continue
-
         try:
             stop_soup = BeautifulSoup(get(route).text, 'html.parser')
-            stop_select = stop_soup.find(id=STOP_DROPDOWN_ID)
+            stop_select = stop_soup.find(id=STOP_DROPDOWN.replace('$', '_'))
         except:
             continue
 
@@ -74,7 +78,7 @@ def parse(resp):
             stop_code, stop_name = stop_option.text.split(', ')
 
             doc['stops'].append(OrderedDict([
-                ('stop', stop_code),
+                ('code', stop_code),
                 ('name', stop_name)
             ]))
 
@@ -83,18 +87,10 @@ def parse(resp):
     return data
 
 
-def get_viewstate():
-    resp = requests.get(BASE_URL)
-    soup = BeautifulSoup(resp.text, 'html.parser')
+if __name__ == '__main__':
+    import sys
+    import json
 
-    payload = {}
-
-    for key in VIEWSTATE, VIEWSTATE_GENERATOR:
-        element = soup.find(id=key)
-
-        if not element:
-            return None
-
-        payload[key] = element['value']
-
-    return payload
+    data = scrape()
+    dump = json.dumps(data)
+    print(dump)

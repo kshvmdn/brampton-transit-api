@@ -1,0 +1,19 @@
+const { app, server, r } = require('./../');
+
+const PORT = process.env.PORT || 3001;
+const ADDRESS = process.env.ADDRESS || 'localhost';
+const DB_HOST = process.env.RDB_HOST || 'localhost';
+const DB_PORT = process.env.RDB_POST || 28015;
+const DB_NAME = process.env.RDB_DB || 'nextride';
+
+app.configure(() => {
+  server.listen(PORT, ADDRESS, () => {
+    console.log(`Listening @ http://${server.address().address}:${server.address().port}.`);
+  });
+
+  r.connect({ host: DB_HOST, port: DB_PORT, db: DB_NAME}, (err, conn) => {
+    if (err) throw err
+
+    global.conn = conn
+  });
+});

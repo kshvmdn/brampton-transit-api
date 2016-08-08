@@ -1,5 +1,6 @@
 const express = require('express');
 const Scraper = require('./../utils/scraper');
+const r = require('rethinkdb');
 
 const router = new express.Router();
 
@@ -38,14 +39,23 @@ router.get('/list', (req, res, next) => {
 });
 
 router.get('/stops', (req, res, next) => {
-  const response = {
-    data: null,
-    meta: {
-      status: 501,
-      message: 'Not yet implemented.',
-    },
-  };
-  res.status(response.meta.status).json(response);
+  r.table('stops').run(global.conn, (err, cursor) => {
+    if (err) return next(err)
+
+    cursor.toArray(function(err, result) {
+      if (err) return next(err);
+
+      const response = {
+        data: result,
+        meta: {
+          status: 200,
+          message: 'OK',
+        },
+      };
+
+      res.status(response.meta.status).json(response);
+    });
+  });
 });
 
 router.get('/stop/:stop', (req, res, next) => {

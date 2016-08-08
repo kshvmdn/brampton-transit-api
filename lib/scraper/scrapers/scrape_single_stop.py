@@ -1,7 +1,13 @@
+"""
+Scrape the schedule for a single stop.
+"""
+
 import requests
 
 from bs4 import BeautifulSoup
 from collections import OrderedDict
+
+from utils.viewstate import get_viewstate
 
 BASE_URL = 'http://nextride.brampton.ca/mob/SearchBy.aspx'
 
@@ -20,7 +26,7 @@ def scrape(stop):
 
 
 def get(stop):
-    payload = get_viewstate()
+    payload = get_viewstate(BASE_URL, VIEWSTATE, VIEWSTATEGENERATOR)
 
     if not payload:
         return None
@@ -84,23 +90,6 @@ def parse(resp):
             match['times'].append(time)
 
     return data
-
-
-def get_viewstate():
-    resp = requests.get(BASE_URL)
-    soup = BeautifulSoup(resp.text, 'html.parser')
-
-    payload = {}
-
-    for key in VIEWSTATE, VIEWSTATEGENERATOR:
-        element = soup.find(id=key)
-
-        if not element:
-            return None
-
-        payload[key] = element['value']
-
-    return payload
 
 
 if __name__ == '__main__':

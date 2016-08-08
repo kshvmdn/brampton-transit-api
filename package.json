@@ -5,9 +5,9 @@
   "scripts": {
     "build-scss": "node-sass --include-path scss public/scss/main.scss public/stylesheets/main.css --output-style compressed",
     "lint": "eslint index.js api/ utils/",
-    "watch": "nodemon .",
+    "watch": "nodemon bin/www",
     "watch-scss": "npm run build-scss -- -w",
-    "start": "node ."
+    "start": "node bin/www"
   },
   "author": {
     "name": "Kashav Madan",
@@ -23,7 +23,9 @@
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
     "morgan": "^1.7.0",
-    "python-shell": "^0.4.0"
+    "node-cron": "^1.1.1",
+    "python-shell": "^0.4.0",
+    "rethinkdb": "^2.3.2"
   },
   "devDependencies": {
     "eslint": "^3.2.2",
