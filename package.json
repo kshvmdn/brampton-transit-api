@@ -2,6 +2,9 @@
   "name": "next-ride-api",
   "description": "Scraper and API for the Brampton Transit Next Ride service.",
   "version": "0.0.1",
+  "engines": {
+    "node": "6.x.x",
+  },
   "scripts": {
     "build-scss": "node-sass --include-path scss public/scss/main.scss public/stylesheets/main.css --output-style compressed",
     "lint": "eslint index.js api/ utils/",

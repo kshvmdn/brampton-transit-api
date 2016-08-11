@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const { app, server, r } = require('./../');
 
 const PORT = process.env.PORT || 3001;
