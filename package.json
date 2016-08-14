@@ -2,15 +2,17 @@
   "name": "next-ride-api",
   "description": "Scraper and API for the Brampton Transit Next Ride service.",
   "version": "0.0.1",
+  "private": true,
   "engines": {
-    "node": "6.x.x",
+    "node": "6.x.x"
   },
   "scripts": {
-    "build-scss": "node-sass --include-path scss public/scss/main.scss public/stylesheets/main.css --output-style compressed",
     "lint": "eslint index.js api/ utils/",
-    "watch": "nodemon bin/www",
-    "watch-scss": "npm run build-scss -- -w",
-    "start": "node bin/www"
+    "test": "npm run lint && mocha",
+    "watch": "nodemon .",
+    "start": "node .",
+    "build-scss": "node-sass --include-path scss public/scss/main.scss public/stylesheets/main.css --output-style compressed",
+    "watch-scss": "npm run build-scss -- -w"
   },
   "author": {
     "name": "Kashav Madan",
@@ -23,17 +25,19 @@
     "url": "https://github.com/kshvmdn/next-ride-api"
   },
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
     "morgan": "^1.7.0",
-    "node-cron": "^1.1.1",
     "python-shell": "^0.4.0",
-    "rethinkdb": "^2.3.2"
+    "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
     "eslint": "^3.2.2",
-    "eslint-config-airbnb": "^10.0.0",
-    "eslint-plugin-import": "^1.12.0",
+    "eslint-config-standard": "^5.3.5",
+    "eslint-plugin-promise": "^2.0.1",
+    "eslint-plugin-standard": "^2.0.0",
+    "mocha": "^3.0.2",
     "node-sass": "^3.8.0",
     "nodemon": "^1.9.2"
   }

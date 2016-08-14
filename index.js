@@ -1,44 +1,52 @@
-const cron = require('node-cron');
-const express = require('express');
-const hbs = require('express-handlebars');
-const http = require('http');
-const morgan = require('morgan');
-const path = require('path');
-const r = require('rethinkdb');
+#!/usr/bin/env node
 
-const api = require('./api');
-const Scraper = require('./utils/scraper');
+const bodyParser = require('body-parser')
+const express = require('express')
+const favicon = require('serve-favicon')
+const fs = require('fs')
+const hbs = require('express-handlebars')
+const http = require('http')
+const morgan = require('morgan')
+const path = require('path')
 
-const app = express();
-const server = http.createServer(app);
+const api = require('./api')
+const Scraper = require('./utils/scraper')
 
-app.configure = (cb) => {
-  app.use(morgan('dev'));
+const PORT = process.env.PORT || 3001
+const ADDRESS = process.env.ADDRESS || 'localhost'
 
-  app.engine('handlebars', hbs({ defaultLayout: 'single' }));
-  app.set('view engine', 'handlebars');
+const app = express()
+const server = http.createServer(app)
 
-  app.use(express.static(path.join(__dirname, 'public')));
+app.use(morgan('dev'))
 
-  app.get('/', (req, res) => {
-    res.render('home', {});
-  });
+app.use(bodyParser.urlencoded({ extended: false }))
 
-  app.use('/api', api);
+app.engine('handlebars', hbs({ defaultLayout: 'single' }))
+app.set('view engine', 'handlebars')
 
-  app.get('/*', (req, res) => {
-    res.redirect('/');
-  });
+app.use(express.static(path.join(__dirname, 'public')))
 
-  const task = cron.schedule('* 0 0 1 * *', () => {
-    Scraper.getStopsList();
-  }, true);
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')))
 
-  if (process.env.SCRAPE === '1') {
-    Scraper.getStopsList();
-  }
+app.get('/', (req, res) => {
+  res.render('home', {})
+})
 
-  if (cb) cb();
-};
+app.use('/api', api)
 
-module.exports = { app, server, r };
+app.get('/*', (req, res) => {
+  res.redirect('/')
+})
+
+try {
+  fs.accessSync(path.join(__dirname, 'data', 'stops.json'))
+} catch (e) {
+  Scraper.getStopList()
+}
+
+server.listen(PORT, ADDRESS, () => {
+  console.log(`Listening @ http://${server.address().address}:${server.address().port}.`)
+})
+
+module.exports = exports = app
