@@ -1,4 +1,4 @@
-### Node
+#### NODE ####
 
 # Logs
 logs
@@ -42,7 +42,8 @@ stylesheets/
 data/
 !data/.gitkeep
 
-### Python
+#### PYTHON ####
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
