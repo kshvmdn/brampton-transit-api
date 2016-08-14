@@ -2,8 +2,8 @@ import json
 import os
 import sys
 
-from scrapers.single_stop import scrape as get_stop
-from scrapers.stop_list import scrape as get_stop_list
+from .scrapers.single_stop import scrape as get_stop
+from .scrapers.stop_list import scrape as get_stop_list
 
 
 def main():
