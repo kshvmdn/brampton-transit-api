@@ -11,7 +11,7 @@
     "test": "npm run lint && mocha",
     "watch": "nodemon .",
     "start": "node .",
-    "build-scss": "node-sass --include-path scss public/scss/main.scss public/stylesheets/main.css --output-style compressed",
+    "build-scss": "node-sass --include-path scss public/scss/main.scss public/stylesheets/main.css",
     "watch-scss": "npm run build-scss -- -w"
   },
   "author": {
