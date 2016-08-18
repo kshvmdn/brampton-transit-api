@@ -1,4 +1,4 @@
-## next-ride-api
+# next-ride-api [![Build Status](https://travis-ci.org/kshvmdn/next-ride-api.svg?branch=master)](https://travis-ci.org/kshvmdn/next-ride-api)
 
 A scraper and web API for Brampton Transit's [Next Ride](http://nextride.brampton.ca/) service.
 
