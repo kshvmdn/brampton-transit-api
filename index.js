@@ -42,6 +42,7 @@ app.get('/*', (req, res) => {
 try {
   fs.accessSync(path.join(__dirname, 'data', 'stops.json'))
 } catch (e) {
+  // if data/stops.json doesn't exist, rescrape stop list
   Scraper.getStopList()
 }
 
