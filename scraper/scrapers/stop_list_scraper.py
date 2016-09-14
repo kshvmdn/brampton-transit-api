@@ -71,10 +71,8 @@ class StopListScraper:
             route_number, route_name = route_option.text.strip().split(' - ')
 
             doc = OrderedDict([
-                ('route', OrderedDict([
-                    ('number', route_number),
-                    ('name', route_name)
-                ])),
+                ('name', route_name),
+                ('number', route_number),
                 ('stops', [])
             ])
 
@@ -82,8 +80,8 @@ class StopListScraper:
                 stop_code, stop_name = stop_option.text.split(', ')
 
                 doc['stops'].append(OrderedDict([
-                    ('code', stop_code),
-                    ('name', stop_name)
+                    ('stop_code', stop_code),
+                    ('stop_name', stop_name)
                 ]))
 
             data.append(doc)

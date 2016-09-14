@@ -1,4 +1,4 @@
-#### NODE ####
+### NODE #######################################################################
 
 # Logs
 logs
@@ -35,14 +35,7 @@ node_modules
 # Optional REPL history
 .node_repl_history
 
-# Sass output
-stylesheets/
-
-# Scraped data
-data/
-!data/.gitkeep
-
-#### PYTHON ####
+### PYTHON #####################################################################
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -106,3 +99,9 @@ target/
 
 # PyCharm
 .idea/
+
+### OTHER ######################################################################
+
+# Scraped data & logs
+.data/
+!.data/.gitkeep
