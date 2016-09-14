@@ -45,11 +45,6 @@ class StopScraper:
 
         soup = BeautifulSoup(resp.text, 'html.parser')
 
-        data = OrderedDict([
-            ('stop', OrderedDict()),
-            ('routes', [])
-        ])
-
         description = soup.find(id=StopScraper.DESCRIPTION)
         results = soup.find(id=StopScraper.RESULTS)
         error = soup.find(id=StopScraper.ERROR)
@@ -57,11 +52,13 @@ class StopScraper:
         if error or not (description and results):
             return None
 
-        stop_number, stop_name = [x.strip() for x in description.text.split(', ')]
+        stop_number, stop_name = \
+            [x.strip() for x in description.text.split(', ')]
 
-        data['stop'].update([
-            ('id', stop_number.replace('Stop', '').strip()),
-            ('name', stop_name)
+        data = OrderedDict([
+            ('stop', stop_number.replace('Stop', '').strip()),
+            ('stop_name', stop_name),
+            ('routes', [])
         ])
 
         for tr in results.find_all('tr')[1:]:
@@ -76,14 +73,14 @@ class StopScraper:
 
             time = td[1].text.strip()
 
-            match = next((r for r in data['routes']
-                          if r['direction'] == direction and r['route'] == route),
-                         None)
+            match = next(
+                (r for r in data['routes']
+                 if r['direction'] == direction and r['route'] == route), None)
 
             if not match:
                 data['routes'].append(OrderedDict([
-                    ('direction', direction),
                     ('route', route),
+                    ('direction', direction),
                     ('times', [time])
                 ]))
             else:

@@ -81,44 +81,36 @@
     // http://127.0.0.1:3001/api/stop/4035
     {
       "data": {
-        "stop": {
-          "id": "4035",
-          "name": "Highway 50 - Zum Queen Station Stop"
-        },
+        "stop": "4035",
+        "stop_name": "Highway 50 - Zum Queen Station Stop",
         "routes": [
           {
-            "direction": "Queen WB",
-            "route": "1",
-            "times": [
-              "4 min(s)"
-            ]
-          },
-          {
-            "direction": "Sandalwood WB",
-            "route": "23",
-            "times": [
-              "5 min(s)"
-            ]
-          },
-          {
+            "route": "501",
             "direction": "Zum Queen WB",
-            "route": "501",
             "times": [
-              "8 min(s)"
+              "6 min(s)",
+              "11:10 PM"
             ]
           },
           {
+            "route": "23",
+            "direction": "Sandalwood WB",
+            "times": [
+              "10:51 PM"
+            ]
+          },
+          {
+            "route": "1",
+            "direction": "Queen WB",
+            "times": [
+              "10:52 PM"
+            ]
+          },
+          {
+            "route": "501",
             "direction": "Zum Queen WB-407",
-            "route": "501",
             "times": [
-              "10:32 PM"
-            ]
-          },
-          {
-            "direction": "Clarkway NB",
-            "route": "35",
-            "times": [
-              "10:33 PM"
+              "10:55 PM"
             ]
           }
         ]
