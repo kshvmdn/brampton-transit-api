@@ -1,0 +1,3 @@
+[submodule "brampton-transit-scraper"]
+	path = brampton-transit-scraper
+	url = ./brampton-transit-scraper/

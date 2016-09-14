@@ -14,10 +14,10 @@
     "url": "https://github.com/kshvmdn/brampton-transit-api"
   },
   "scripts": {
-    "lint": "eslint src",
+    "lint": "eslint lib/",
     "test": "npm run lint && mocha",
-    "dev": "NODE_ENV=development nodemon src",
-    "start": "node src"
+    "dev": "NODE_ENV=development nodemon lib/",
+    "start": "node lib/"
   },
   "engines": {
     "node": "6"

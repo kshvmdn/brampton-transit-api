@@ -1,67 +1,63 @@
-# next-ride-api [![Build Status](https://travis-ci.org/kshvmdn/next-ride-api.svg?branch=master)](https://travis-ci.org/kshvmdn/next-ride-api)
+## brampton-transit-api [![Build Status](https://travis-ci.org/kshvmdn/next-ride-api.svg?branch=master)](https://travis-ci.org/kshvmdn/next-ride-api)
 
-A scraper and web API for Brampton Transit's [Next Ride](http://nextride.brampton.ca/) service.
+> An unofficial API for retrieving live Brampton Transit bus times.
 
 ### Scraper
 
-- Data source: Next Ride [mobile site](http://nextride.brampton.ca/mob/SearchBy.aspx).
-- Located at [`lib/scraper`](lib/scraper).
+- Data source: [Next Ride](http://nextride.brampton.ca/mob/SearchBy.aspx).
 
 ### Usage
 
 #### Requirements
 
-- [Node.js](https://nodejs.org/en/) (`6.x.x`)
-- [Python](https://www.python.org/download/releases/3.0/) (`3.x`)
+- [Node.js](https://nodejs.org/en/) (`^6`)
+- [Python 3](https://www.python.org/download/releases/3.0/)
 
 #### Getting started
 
 - Clone/[download](https://github.com/kshvmdn/next-ride-api/archive/master.zip) the repository.
 
   ```sh
-  $ git clone https://github.com/kshvmdn/next-ride-api.git
+  $ git clone https://github.com/kshvmdn/brampton-transit-api.git
   ```
   
-- Install Python requirements + Node dependencies.
+- Install Python / Node dependencies.
 
   ```sh
-  $ pip install -r ./lib/scraper/requirements.txt && npm install
+  $ pip install -r requirements.txt && npm install
   ```
 
-- Start the Node application. It'll be running at [`http://localhost:3001`](http://localhost:3001) (or your environment-defined `PORT` & `ADDRESS`).
+- Start the Node server. It'll be running at [`localhost:3001`](http://localhost:3001) (or your environment-defined `HOST` & `PORT`).
 
   ```sh
-  $ npm run build-scss && npm start
+  $ HOST=host PORT=port npm start
   ```
 
 #### API
 
-- `/api/stop`
+- `/api/stops`
 
   + Retrieve a list of all stops, separated by route.
-  + Data is scraped periodically via [`scrapers/stop_list.py`](lib/scraper/scrapers/stop_list.py).
     
     ```js
-    // http://localhost:3001/api/stop
+    // http://localhost:3001/api/stops
     {
       "data": [
         {
-          "route": {
-            "number": "1",
-            "name": "Queen, West"
-          },
+          "name": "Queen, West",
+          "number": "1",
           "stops": [
             {
-              "code": "4035",
-              "name": "Highway 50 - Zum Queen Station Stop"
+              "stop_code": "4035",
+              "stop_name": "Highway 50 - Zum Queen Station Stop"
             },
             {
-              "code": "4036",
-              "name": "The Gore Road - Zum Queen Station S"
+              "stop_code": "2543",
+              "stop_name": "The Gore Rd n/of Queen St E"
             },
             {
-              "code": "2881",
-              "name": "Queen St E w/of Palleschi Dr"
+              "stop_code": "2544",
+              "stop_name": "The Gore Rd s/of Fogal Rd"
             },
             ...
           ]
@@ -77,40 +73,52 @@ A scraper and web API for Brampton Transit's [Next Ride](http://nextride.brampto
 
 - `/api/stop/:stop`
 
-  + Retrieve the schedule for the given `stop` value (refer to `/apistop` for the list of possible values).
-  + Data is scraped in real-time via [`scrapers/single_stop.py`](lib/scraper/scrapers/single_stop.py).
+  + Retrieve the schedule for the given `stop` value (refer to `/api/stop` for the list of all possible values).
+  + Data is scraped in __real-time__.
   + Sample output:
     
     ```js
-    // http://localhost:3001/api/stop/4036
+    // http://127.0.0.1:3001/api/stop/4035
     {
       "data": {
         "stop": {
-          "id": "4036",
-          "name": "The Gore Road - Zum Queen Station S"
+          "id": "4035",
+          "name": "Highway 50 - Zum Queen Station Stop"
         },
         "routes": [
-          {
-            "direction": "Zum Queen WB",
-            "route": "501",
-            "times": [
-              "5 min(s)",
-              "11:27 AM"
-            ]
-          },
           {
             "direction": "Queen WB",
             "route": "1",
             "times": [
-              "11:05 AM",
-              "11:35 AM"
+              "4 min(s)"
+            ]
+          },
+          {
+            "direction": "Sandalwood WB",
+            "route": "23",
+            "times": [
+              "5 min(s)"
+            ]
+          },
+          {
+            "direction": "Zum Queen WB",
+            "route": "501",
+            "times": [
+              "8 min(s)"
             ]
           },
           {
             "direction": "Zum Queen WB-407",
             "route": "501",
             "times": [
-              "11:09 AM"
+              "10:32 PM"
+            ]
+          },
+          {
+            "direction": "Clarkway NB",
+            "route": "35",
+            "times": [
+              "10:33 PM"
             ]
           }
         ]
@@ -124,4 +132,9 @@ A scraper and web API for Brampton Transit's [Next Ride](http://nextride.brampto
 
 ### Contribute
 
-This project is completely open source, feel free to [open an issue](https://github.com/kshvmdn/next-ride-api/issues) / [make a PR](https://github.com/kshvmdn/next-ride-api/pulls) with questions/requests/features/fixes.
+This project is completely open source, feel free to [open an issue](https://github.com/kshvmdn/next-ride-api/issues) or [submit a PR](https://github.com/kshvmdn/next-ride-api/pulls).
+
+Before submitting a PR, please ensure your changes comply with:
+
+  - [PEP 8](https://www.python.org/dev/peps/pep-0008/) for Python;
+  - [Standard](https://github.com/feross/standard) for JavaScript (you can test this by running `npm run lint`)
