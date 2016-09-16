@@ -1,4 +1,4 @@
-## brampton-transit-api [![Build Status](https://travis-ci.org/kshvmdn/next-ride-api.svg?branch=master)](https://travis-ci.org/kshvmdn/next-ride-api)
+## brampton-transit-api [![Build Status](https://travis-ci.org/kshvmdn/brampton-transit-api.svg?branch=master)](https://travis-ci.org/kshvmdn/brampton-transit-api)
 
 > An unofficial API for retrieving live Brampton Transit bus times.
 
