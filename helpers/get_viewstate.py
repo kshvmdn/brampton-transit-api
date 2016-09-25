@@ -1,9 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
-from functools import lru_cache
 
 
-@lru_cache(maxsize=None)
 def get_viewstate(url, *args):
     resp = requests.get(url)
     soup = BeautifulSoup(resp.text, 'html.parser')

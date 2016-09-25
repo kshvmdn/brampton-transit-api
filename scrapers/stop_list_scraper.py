@@ -22,8 +22,8 @@ class StopListScraper:
     ROUTE_DROPDOWN = 'ctl00$mainPanel$MainPanel1$SearchStop1$DropDownRoute'
     STOP_DROPDOWN = 'ctl00$mainPanel$MainPanel1$SearchStop1$DropDownStop'
 
-    def scrape():
-        return StopListScraper.parse(StopListScraper.get())
+    def scrape(opts=None, route_id=None):
+        return StopListScraper.parse(StopListScraper.get(), opts, route_id)
 
     def get(route=None):
         if not route:
@@ -44,7 +44,7 @@ class StopListScraper:
 
         return requests.post(StopListScraper.BASE_URL, data=payload)
 
-    def parse(resp):
+    def parse(resp, opts=None, route_id=None):
         if not resp:
             return None
 
@@ -60,6 +60,11 @@ class StopListScraper:
         for route_option in route_select.find_all('option')[1:]:
             route = route_option['value']
 
+            route_number, route_name = route_option.text.strip().split(' - ')
+
+            if route_id and route_number != str(route_id):
+                continue
+
             try:
                 stop_soup = BeautifulSoup(StopListScraper.get(route).text,
                                           'html.parser')
@@ -68,11 +73,9 @@ class StopListScraper:
             except:
                 continue
 
-            route_number, route_name = route_option.text.strip().split(' - ')
-
             doc = OrderedDict([
-                ('name', route_name),
-                ('number', route_number),
+                ('route', route_number),
+                ('route_name', route_name),
                 ('stops', [])
             ])
 
@@ -80,9 +83,12 @@ class StopListScraper:
                 stop_code, stop_name = stop_option.text.split(', ')
 
                 doc['stops'].append(OrderedDict([
-                    ('stop_code', stop_code),
+                    ('stop', stop_code),
                     ('stop_name', stop_name)
                 ]))
+
+            if opts and opts['sort']:
+                doc['stops'] = sorted(doc['stops'], key=lambda k: k['stop'])
 
             data.append(doc)
 
