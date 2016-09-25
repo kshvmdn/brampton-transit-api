@@ -22,8 +22,8 @@ class StopScraper:
     RESULTS = 'ctl00_mainPanel_gvSearchResult'
     ERROR = 'ctl00_mainPanel_lblError'
 
-    def scrape(stop):
-        return StopScraper.parse(StopScraper.get(stop))
+    def scrape(stop, opts):
+        return StopScraper.parse(StopScraper.get(stop), opts)
 
     def get(stop):
         payload = get_viewstate(StopScraper.BASE_URL, StopScraper.VIEWSTATE,
@@ -39,7 +39,7 @@ class StopScraper:
 
         return requests.post(StopScraper.BASE_URL, data=payload)
 
-    def parse(resp):
+    def parse(resp, opts):
         if not resp:
             return None
 
@@ -73,9 +73,10 @@ class StopScraper:
 
             time = td[1].text.strip()
 
-            match = next(
-                (r for r in data['routes']
-                 if r['direction'] == direction and r['route'] == route), None)
+            match = None if not opts['compact'] else \
+                next((r for r in data['routes']
+                      if r['direction'] == direction and r['route'] == route),
+                     None)
 
             if not match:
                 data['routes'].append(OrderedDict([
