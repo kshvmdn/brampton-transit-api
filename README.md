@@ -14,6 +14,18 @@
 
 #### Installation
 
+- Clone repository.
+
+    ```sh
+    $ git clone https://github.com/kshvmdn/brampton-transit-api.git brampton-transit-api && cd $_
+    ```
+
+- Install project dependencies.
+
+    ```sh
+    $ pip install -r ./requirements.txt
+    ```
+
 #### API
 
 ### Contribute
