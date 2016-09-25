@@ -68,7 +68,7 @@ class StopScraper:
                 # No service, return dataset with empty routes list
                 return data
 
-            route, direction = [c.strip() for c in td[0].text.split(' to ')]
+            route, direction = [c.strip() for c in td[0].text.split(' to ', 1)]
             route = route.replace('Route', '').strip()
 
             time = td[1].text.strip()
