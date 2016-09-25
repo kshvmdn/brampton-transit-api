@@ -6,8 +6,9 @@ from logging.handlers import RotatingFileHandler
 
 from flask import abort, Flask, jsonify, request
 
-from scrapers.stop_scraper import StopScraper
-from scrapers.stop_list_scraper import StopListScraper
+from scrapers.stop import StopScraper
+from scrapers.stop_list import StopListScraper
+from scrapers.stop_search import StopSearchScraper
 
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False

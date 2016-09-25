@@ -1,7 +1,7 @@
-import requests
-
-from bs4 import BeautifulSoup
 from collections import OrderedDict
+
+import requests
+from bs4 import BeautifulSoup
 
 from helpers.get_viewstate import get_viewstate
 
