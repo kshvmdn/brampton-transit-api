@@ -52,9 +52,6 @@ def all_routes():
 @app.route('/api/search/stops/<string:query>')
 def search_stop_list(query):
     response = StopSearchScraper.scrape(query)
-
-    print(response)
-
     return jsonify(data=response, meta=dict(status=200, message='OK'))
 
 
