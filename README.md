@@ -57,6 +57,36 @@ __<a name="api-routes">`/api/routes`</a>__
   }
   ```
   
+__`/api/search/stops/<query>`__
+
+- Search for a list of stops using `query`.
+- Sample response:
+
+  ```js
+  // /api/stops/search/bramalea
+  {
+    "data": [
+      {
+        "stop": "1113",
+        "stop_name": "Bramalea - Zum Steeles Station Stop"
+      },
+      {
+        "stop": "1114",
+        "stop_name": "Steeles Ave E at Bramalea GO Statio"
+      },
+      {
+        "stop": "1150",
+        "stop_name": "Kensington Rd opp Bramalea Medical"
+      },
+      ...
+    ],
+    "meta": {
+      "message": "OK",
+      "status": 200
+    }
+  }
+  ```
+
 __`/api/stops`__
 
 - Fetch a list of Brampton Transit stops (separated by [route](#api-routes), see [_Find By Route_](http://nextride.brampton.ca/RealTime.aspx)).
