@@ -50,14 +50,8 @@ def all_routes():
 
 @app.route('/api/stops')
 def all_stop_lists():
-    # super hacky way of parsing falsy URL argument
-    sort = request.args.get('sort', default='False').lower() not in [
-        '0',
-        'false',
-        'no'
-    ]
-
-    response = StopListScraper.scrape(dict(sort=sort))
+    response = StopListScraper.scrape({
+        'sort': request.args.get('sort', default='0') == 1})
 
     if not response:
         return abort(400, 'Failed to scrape stop list.')
@@ -67,13 +61,8 @@ def all_stop_lists():
 
 @app.route('/api/stops/<int:route_id>')
 def single_stop_list(route_id):
-    sort = request.args.get('sort', default='False').lower() not in [
-        '0',
-        'false',
-        'no'
-    ]
-
-    response = StopListScraper.scrape(dict(sort=sort), route_id)
+    response = StopListScraper.scrape({
+        'sort': request.args.get('sort', default='0') == '1'}, route_id)
 
     if not response:
         return abort(400, 'Failed to scrape stop list for route.')
@@ -83,13 +72,9 @@ def single_stop_list(route_id):
 
 @app.route('/api/stop/<stop_id>')
 def single_stop(stop_id):
-    compact = request.args.get('c', default='False').lower() not in [
-        '0',
-        'false',
-        'no'
-    ]
-
-    response = StopScraper.scrape(stop_id, dict(compact=compact))
+    print(request.args.get('c', default='0') == '1')
+    response = StopScraper.scrape(stop_id, {
+        'compact': request.args.get('c', default='0') == '1'})
 
     if not response:
         return abort(400, 'Failed to scrape data for stop `%s`.' % stop_id)
