@@ -153,7 +153,7 @@ __`/api/stops/<route_id>`__
 __`/api/stop/<stop_id>`__
 
 - Fetch a list of times for a given stop.
-- Add `?c=1` to merge `times` for matching entries.
+- Add `?c=1` to merge `times` for matching routes.
 - Sample response:
 
   ```js
@@ -164,17 +164,84 @@ __`/api/stop/<stop_id>`__
       "stop_name": "Goreway - Zum Steeles Station Stop",
       "routes": [
         {
+          "route": "511",
+          "direction": "Zum Steeles WB",
+          "times": [
+            "12:15 PM"
+          ]
+        },
+        {
           "route": "11",
           "direction": "Steeles WB-11A",
           "times": [
-            "01:23 AM"
+            "12:24 PM"
+          ]
+        },
+        {
+          "route": "511",
+          "direction": "Zum Steeles WB",
+          "times": [
+            "12:35 PM"
+          ]
+        },
+        {
+          "route": "11",
+          "direction": "Steeles WB",
+          "times": [
+            "12:54 PM"
+          ]
+        },
+        {
+          "route": "511",
+          "direction": "Zum Steeles WB",
+          "times": [
+            "12:55 PM"
           ]
         }
       ]
     },
     "meta": {
-      "message": "OK",
-      "status": 200
+      "status": 200,
+      "message": "OK"
+    }
+  }
+  ```
+
+  ```js
+  // /api/stop/1080?c=1
+  {
+    "data": {
+      "stop": "1080",
+      "stop_name": "Goreway - Zum Steeles Station Stop",
+      "routes": [
+        {
+          "route": "511",
+          "direction": "Zum Steeles WB",
+          "times": [
+            "12:15 PM",
+            "12:35 PM",
+            "12:55 PM"
+          ]
+        },
+        {
+          "route": "11",
+          "direction": "Steeles WB-11A",
+          "times": [
+            "12:24 PM"
+          ]
+        },
+        {
+          "route": "11",
+          "direction": "Steeles WB",
+          "times": [
+            "12:54 PM"
+          ]
+        }
+      ]
+    },
+    "meta": {
+      "status": 200,
+      "message": "OK"
     }
   }
   ```
