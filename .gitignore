@@ -89,4 +89,6 @@ ENV/
 # Rope project settings
 .ropeproject
 
+# Scraped data
 .data
+

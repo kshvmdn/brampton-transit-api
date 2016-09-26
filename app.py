@@ -79,7 +79,6 @@ def single_stop_list(route_id):
 
 @app.route('/api/stop/<stop_id>')
 def single_stop(stop_id):
-    print(request.args.get('c', default='0') == '1')
     response = StopScraper.scrape(stop_id, {
         'compact': request.args.get('c', default='0') == '1'})
 
