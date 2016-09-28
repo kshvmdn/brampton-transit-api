@@ -13,6 +13,26 @@ from scrapers.stop_search import StopSearchScraper
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 
+VERSION = '1.0'
+
+
+@app.before_first_request
+def setup_logging():
+    formatter = logging.Formatter(
+            '[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s')
+
+    if not app.debug:
+        handler, level = logging.StreamHandler(), logging.INFO
+    else:
+        handler, level = RotatingFileHandler(LOGFILE,
+                                             maxBytes=10000000,
+                                             backupCount=5), logging.DEBUG
+
+    handler.setLevel(level)
+    handler.setFormatter(formatter)
+
+    app.logger.addHandler(handler)
+
 
 @app.before_request
 def log_before_request():
@@ -33,11 +53,10 @@ def log_after_request(response):
     }
 
     app.logger.info('%(ip)s - %(method)s %(url)s?%(qs)s (%(in)sms)', params)
-
     return response
 
 
-@app.route('/api/routes')
+@app.route('/api/%s/routes' % VERSION)
 def all_routes():
     response = list(map(lambda k: {
         'route_name': k['route_name'],
@@ -49,13 +68,13 @@ def all_routes():
     return jsonify(data=response, meta=dict(status=200, message='OK'))
 
 
-@app.route('/api/search/stops/<string:query>')
+@app.route('/api/%s/search/stops/<string:query>' % VERSION)
 def search_stop_list(query):
     response = StopSearchScraper.scrape(query)
     return jsonify(data=response, meta=dict(status=200, message='OK'))
 
 
-@app.route('/api/stops')
+@app.route('/api/%s/stops' % VERSION)
 def all_stop_lists():
     response = StopListScraper.scrape({
         'sort': request.args.get('sort', default='0') == 1})
@@ -66,7 +85,7 @@ def all_stop_lists():
     return jsonify(data=response, meta=dict(status=200, message='OK'))
 
 
-@app.route('/api/stops/<int:route_id>')
+@app.route('/api/%s/stops/<int:route_id>' % VERSION)
 def single_stop_list(route_id):
     response = StopListScraper.scrape({
         'sort': request.args.get('sort', default='0') == '1'}, route_id)
@@ -77,7 +96,7 @@ def single_stop_list(route_id):
     return jsonify(data=response, meta=dict(status=200, message='OK'))
 
 
-@app.route('/api/stop/<stop_id>')
+@app.route('/api/%s/stop/<stop_id>' % VERSION)
 def single_stop(stop_id):
     response = StopScraper.scrape(stop_id, {
         'compact': request.args.get('c', default='0') == '1'})
@@ -101,11 +120,4 @@ if __name__ == '__main__':
                                   os.environ.get('DEBUG', False),
                                   os.environ.get('LOGFILE', 'app.log'))
 
-    formatter = logging.Formatter(
-        '[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s')
-    handler = RotatingFileHandler(LOGFILE, maxBytes=10000000, backupCount=5)
-    handler.setLevel(logging.DEBUG)
-    handler.setFormatter(formatter)
-
-    app.logger.addHandler(handler)
     app.run(host=HOST, port=int(PORT), debug=DEBUG)
