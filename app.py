@@ -4,7 +4,7 @@ import os
 import time
 from logging.handlers import RotatingFileHandler
 
-from flask import abort, Flask, jsonify, request
+from flask import abort, Flask, jsonify, render_template, request
 
 from scrapers.stop import StopScraper
 from scrapers.stop_list import StopListScraper
@@ -54,6 +54,11 @@ def log_after_request(response):
 
     app.logger.info('%(ip)s - %(method)s %(url)s?%(qs)s (%(in)sms)', params)
     return response
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 @app.route('/api/%s/routes' % VERSION)

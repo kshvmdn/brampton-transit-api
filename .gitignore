@@ -92,3 +92,6 @@ ENV/
 # Scraped data
 .data
 
+# Sass cache
+.sass-cache
+
