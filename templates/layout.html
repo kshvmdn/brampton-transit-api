@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="application-name" content="Brampton Transit API">
+  <meta name="description" content="A live API for Brampton Transit bus times.">
+
+  <title>Brampton Transit API</title>
+
+  <base href="/">
+
+  <link href="https://fonts.googleapis.com/css?family=Signika:300,400,600,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/normalize.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/png">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="left"><a href="/">Brampton Transit API</a></div>
+      <div class="right">
+        <a href="https://github.com/kshvmdn/brampton-transit-api"><img src="{{ url_for('static', filename='images/github.svg') }}"></a>
+      </div>
+    </div>
+    <div class="content">
+      {% block content %}{% endblock %}
+    </div>
+    <div class="footer">
+      Built by <a href="http://kshvmdn.com">Kashav Madan</a>. View source on <a href="https://github.com/kshvmdn/brampton-transit-api">GitHub</a>.
+    </div>
+  </div>
+</body>
+</html>
