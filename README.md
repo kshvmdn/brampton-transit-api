@@ -2,31 +2,18 @@
 
 > An unofficial API for retrieving live Brampton Transit bus times.
 
-### Scraper
+Live at [http://transit.kshvmdn.com](http://transit.kshvmdn.com) (give it a few seconds to spin up, it's running on Heroku's free tier).
 
-- Data source: [Next Ride](http://nextride.brampton.ca/mob/SearchBy.aspx).
+### Design
 
-### Usage
+The project is a constant work in progress. The `v0` API is essentially a dump of data scraped in real-time. This obviously isn't too great of a structure for an API like this, particularly when requesting a large dataset (i.e. `api/v0/routes`). A future implementation _may_ include some sort of data store or caching mechanism.
 
-#### Requirements
+#### Scrapers
 
-- [Python 3](https://www.python.org/download/releases/3.0/)
+- Built with the glorious [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) Python library.
+- Data source: Brampton Transit Next Ride ([desktop](http://www.brampton.ca/EN/residents/transit/plan-your-trip/Pages/NextRide.aspx), [mobile](http://nextride.brampton.ca/mob/SearchBy.aspx)).
 
-#### Installation
-
-- Clone repository.
-
-    ```sh
-    $ git clone https://github.com/kshvmdn/brampton-transit-api.git brampton-transit-api && cd $_
-    ```
-
-- Install project dependencies.
-
-    ```sh
-    $ pip install -r ./requirements.txt
-    ```
-
-#### API
+### Endpoints
 
 __<a name="api-routes">`/api/v0/routes`</a>__
 
@@ -276,6 +263,38 @@ __`/api/v0/stop/<stop_id>`__
   }
   ```
 
+### Self-hosting
+
+#### Requirements
+
+- [Python 3](https://www.python.org/download/releases/3.0/)
+
+#### Installation
+
+- Clone repository.
+
+  ```sh
+  $ git clone https://github.com/kshvmdn/brampton-transit-api.git brampton-transit-api && cd $_
+  ```
+
+- Install Python dependencies.
+
+  ```sh
+  $ pip install -r ./requirements.txt
+  ```
+
+- Start the server.
+
+  ```sh
+  $ PORT=<port> HOST=<host> DEBUG=<True|False> ./app.py
+  ```
+
 ### Contribute
 
-This project is completely open source, feel free to [open an issue](https://github.com/kshvmdn/next-ride-api/issues) or [submit a PR](https://github.com/kshvmdn/next-ride-api/pulls).
+This project is completely open source, feel free to [open an issue](https://github.com/kshvmdn/next-ride-api/issues) or [submit a PR](https://github.com/kshvmdn/next-ride-api/pulls). Refer to the [self-hosting](#self-hosting) guide to get started.
+
+Before submitting a PR, please ensure your changes comply with the [PEP 8](https://www.python.org/dev/peps/pep-0008/) standard for Python code.
+
+### License
+
+[MIT](LICENSE) © [Kashav Madan](http://kshvmdn.com).
