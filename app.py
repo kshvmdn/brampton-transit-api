@@ -13,7 +13,7 @@ from scrapers.stop_search import StopSearchScraper
 app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 
-VERSION = '1.0'
+VERSION = 'v0'
 
 
 @app.before_first_request

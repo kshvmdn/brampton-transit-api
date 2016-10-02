@@ -28,7 +28,7 @@
 
 #### API
 
-__<a name="api-routes">`/api/1.0/routes`</a>__
+__<a name="api-routes">`/api/v0/routes`</a>__
 
 - Fetch a list of Brampton Transit routes (see [_Find By Route_](http://nextride.brampton.ca/RealTime.aspx)).
 - Sample response:
@@ -57,13 +57,13 @@ __<a name="api-routes">`/api/1.0/routes`</a>__
   }
   ```
   
-__`/api/1.0/search/stops/<query>`__
+__`/api/v0/search/stops/<query>`__
 
 - Search for a list of stops using `query`.
 - Sample response:
 
   ```js
-  // /api/1.0/stops/search/bramalea
+  // /api/v0/stops/search/bramalea
   {
     "data": [
       {
@@ -87,7 +87,7 @@ __`/api/1.0/search/stops/<query>`__
   }
   ```
 
-__`/api/1.0/stops`__
+__`/api/v0/stops`__
 
 - Fetch a list of Brampton Transit stops (separated by [route](#api-routes), see [_Find By Route_](http://nextride.brampton.ca/RealTime.aspx)).
 - `stops` are sorted by order of occurence. Add `?sort=1` to sort by integer value.
@@ -143,14 +143,14 @@ __`/api/1.0/stops`__
   }
   ```
   
-__`/api/1.0/stops/<route_id>`__
+__`/api/v0/stops/<route_id>`__
 
 - Fetch a list of Brampton Transit stops for a single route.
 - `stops` are sorted by order of occurence. Add `?sort=1` to sort by integer value.
 - Sample response:
   
   ```js
-  // /api/1.0/stops/511
+  // /api/v0/stops/511
   {
     "data": [
       {
@@ -180,14 +180,14 @@ __`/api/1.0/stops/<route_id>`__
   }
   ```
 
-__`/api/1.0/stop/<stop_id>`__
+__`/api/v0/stop/<stop_id>`__
 
 - Fetch a list of times for a given stop.
 - Add `?c=1` to merge `times` for matching routes.
 - Sample response:
 
   ```js
-  // /api/1.0/stop/1080
+  // /api/v0/stop/1080
   {
     "data": {
       "stop": "1080",
@@ -238,7 +238,7 @@ __`/api/1.0/stop/<stop_id>`__
   ```
 
   ```js
-  // /api/1.0/stop/1080?c=1
+  // /api/v0/stop/1080?c=1
   {
     "data": {
       "stop": "1080",
