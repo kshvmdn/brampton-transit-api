@@ -1,1 +1,1 @@
-web: ./app.py --log-file=-
+web: npm start
