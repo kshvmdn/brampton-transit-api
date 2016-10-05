@@ -45,3 +45,6 @@ jspm_packages
 
 # Sass
 .sass-cache/
+
+# Logs directory
+!logs/.gitkeep

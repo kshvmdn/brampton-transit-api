@@ -40,6 +40,7 @@
     "method-override": "^2.3.6",
     "morgan": "^1.7.0",
     "redis": "^2.6.2",
-    "serve-favicon": "^2.3.0"
+    "serve-favicon": "^2.3.0",
+    "winston": "^2.2.0"
   }
 }
