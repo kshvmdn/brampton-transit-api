@@ -288,7 +288,7 @@ __`/api/v1/stop/<stop_id>`__
 - Start the server.
 
   ```sh
-  $ PORT=<port> HOST=<host> REDIS_PORT=<redis_port> REDIS_HOST=<redis_host>NODE_ENV=<env> npm start # use start:dev to watch for changes
+  $ PORT=<port> HOST=<host> REDIS_URL=<redis_url> NODE_ENV=<env> npm start # use start:dev to watch for changes
   ```
 
 ### Contribute
