@@ -8,7 +8,7 @@ RUN mkdir -p /app
 
 ADD package.json /app/
 RUN cd /app && \
-    npm install && \
+    npm install
 
 ADD . /app
 WORKDIR /app

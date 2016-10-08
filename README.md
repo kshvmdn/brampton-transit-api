@@ -267,7 +267,7 @@ __`/api/v1/stop/<stop_id>`__
 
 #### Installation
 
-- Clone repository.
+- <a name="clone-repo"/>Clone repository.</a>
 
   ```sh
   $ git clone https://github.com/kshvmdn/brampton-transit-api.git brampton-transit-api && cd $_
@@ -290,6 +290,24 @@ __`/api/v1/stop/<stop_id>`__
   ```sh
   $ PORT=<port> HOST=<host> REDIS_URL=<redis_url> NODE_ENV=<env> npm start # use start:dev to watch for changes
   ```
+
+### Running with [Docker Compose](https://docs.docker.com/compose/)
+
+- Be sure to have Docker Compose [installed](https://docs.docker.com/compose/install/)
+
+- [Clone repository.](#clone-repo)
+
+- Build containers.
+
+```sh
+$ docker-compose build
+```
+
+- Start & attach containers. Add `-d` for running in detached mode.
+
+```sh
+$ docker-compose up [-d]
+```
 
 ### Contribute
 
