@@ -1,0 +1,17 @@
+nginx:
+    build: .
+    container_name: nginx
+    dockerfile: nginx.Dockerfile
+    links:
+        - node:node
+    ports:
+        - "80:80"
+
+node:
+    build: .
+    container_name: node
+    dockerfile: node.Dockerfile
+    environment:
+        NODE_ENV: production
+    ports:
+        - "3001:3000"
