@@ -4,18 +4,13 @@
 
 Live at [http://transit.kshvmdn.com](http://transit.kshvmdn.com) (give it a few seconds to spin up, it's running on Heroku's free tier).
 
-### Design
-
-The project is a constant work in progress. The `v0` API is essentially a dump of data scraped in real-time. This obviously isn't too great of a structure for an API like this, particularly when requesting a large dataset (i.e. `api/v0/routes`). A future implementation _may_ include some sort of data store or caching mechanism.
-
 #### Scrapers
 
-- Built with the glorious [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) Python library.
 - Data source: Brampton Transit Next Ride ([desktop](http://www.brampton.ca/EN/residents/transit/plan-your-trip/Pages/NextRide.aspx), [mobile](http://nextride.brampton.ca/mob/SearchBy.aspx)).
 
 ### Endpoints
 
-__<a name="api-routes">`/api/v0/routes`</a>__
+__<a name="api-routes">`/api/v1/routes`</a>__
 
 - Fetch a list of Brampton Transit routes (see [_Find By Route_](http://nextride.brampton.ca/RealTime.aspx)).
 - Sample response:
@@ -44,13 +39,13 @@ __<a name="api-routes">`/api/v0/routes`</a>__
   }
   ```
   
-__`/api/v0/search/stops/<query>`__
+__`/api/v1/search/stops/<query>`__
 
 - Search for a list of stops using `query`.
 - Sample response:
 
   ```js
-  // /api/v0/stops/search/bramalea
+  // /api/v1/stops/search/bramalea
   {
     "data": [
       {
@@ -74,7 +69,7 @@ __`/api/v0/search/stops/<query>`__
   }
   ```
 
-__`/api/v0/stops`__
+__`/api/v1/stops`__
 
 - Fetch a list of Brampton Transit stops (separated by [route](#api-routes), see [_Find By Route_](http://nextride.brampton.ca/RealTime.aspx)).
 - `stops` are sorted by order of occurence. Add `?sort=1` to sort by integer value.
@@ -130,14 +125,14 @@ __`/api/v0/stops`__
   }
   ```
   
-__`/api/v0/stops/<route_id>`__
+__`/api/v1/stops/<route_id>`__
 
 - Fetch a list of Brampton Transit stops for a single route.
 - `stops` are sorted by order of occurence. Add `?sort=1` to sort by integer value.
 - Sample response:
   
   ```js
-  // /api/v0/stops/511
+  // /api/v1/stops/511
   {
     "data": [
       {
@@ -167,14 +162,14 @@ __`/api/v0/stops/<route_id>`__
   }
   ```
 
-__`/api/v0/stop/<stop_id>`__
+__`/api/v1/stop/<stop_id>`__
 
 - Fetch a list of times for a given stop.
 - Add `?c=1` to merge `times` for matching routes.
 - Sample response:
 
   ```js
-  // /api/v0/stop/1080
+  // /api/v1/stop/1080
   {
     "data": {
       "stop": "1080",
@@ -225,7 +220,7 @@ __`/api/v0/stop/<stop_id>`__
   ```
 
   ```js
-  // /api/v0/stop/1080?c=1
+  // /api/v1/stop/1080?c=1
   {
     "data": {
       "stop": "1080",
@@ -267,7 +262,8 @@ __`/api/v0/stop/<stop_id>`__
 
 #### Requirements
 
-- [Python 3](https://www.python.org/download/releases/3.0/)
+- [Node.js](https://nodejs.org/en/) (`^v6`)
+- [Redis](http://redis.io/)
 
 #### Installation
 
@@ -277,23 +273,33 @@ __`/api/v0/stop/<stop_id>`__
   $ git clone https://github.com/kshvmdn/brampton-transit-api.git brampton-transit-api && cd $_
   ```
 
-- Install Python dependencies.
+- Install npm dependencies.
 
   ```sh
-  $ pip install -r ./requirements.txt
+  $ npm install
+  ```
+
+- Start redis.
+
+  ```sh
+  $ redis-server
   ```
 
 - Start the server.
 
   ```sh
-  $ PORT=<port> HOST=<host> DEBUG=<True|False> ./app.py
+  $ PORT=<port> HOST=<host> REDIS_PORT=<redis_port> REDIS_HOST=<redis_host>NODE_ENV=<env> npm start # use start:dev to watch for changes
   ```
 
 ### Contribute
 
 This project is completely open source, feel free to [open an issue](https://github.com/kshvmdn/next-ride-api/issues) or [submit a PR](https://github.com/kshvmdn/next-ride-api/pulls). Refer to the [self-hosting](#self-hosting) guide to get started.
 
-Before submitting a PR, please ensure your changes comply with the [PEP 8](https://www.python.org/dev/peps/pep-0008/) standard for Python code.
+Before submitting a PR, please ensure your changes comply with the [Standard](https://github.com/feross/standard) style guide for JavaScript code.
+
+  ```sh
+  npm run test:lint
+  ```
 
 ### License
 
