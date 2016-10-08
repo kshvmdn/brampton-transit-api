@@ -21,6 +21,9 @@
     "url": "https://github.com/kshvmdn/brampton-transit-api/issues"
   },
   "homepage": "https://github.com/kshvmdn/brampton-transit-api#readme",
+  "engines": {
+    "node": "^6"
+  },
   "devDependencies": {
     "eslint": "^3.7.1",
     "eslint-config-standard": "^6.2.0",
