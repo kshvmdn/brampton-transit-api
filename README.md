@@ -291,23 +291,23 @@ __`/api/v1/stop/<stop_id>`__
   $ PORT=<port> HOST=<host> REDIS_URL=<redis_url> NODE_ENV=<env> npm start # use start:dev to watch for changes
   ```
 
-### Running with [Docker Compose](https://docs.docker.com/compose/)
+#### Running with [Docker Compose](https://docs.docker.com/compose/)
 
-- Be sure to have Docker Compose [installed](https://docs.docker.com/compose/install/)
+- Be sure to have Docker Compose [installed](https://docs.docker.com/compose/install/).
 
-- [Clone repository.](#clone-repo)
+- [Clone repository](#clone-repo).
 
 - Build containers.
 
-```sh
-$ docker-compose build
-```
+  ```sh
+  $ docker-compose build
+  ```
 
-- Start & attach containers. Add `-d` for running in detached mode.
+- Start/attach containers. Add `-d` to run in detached mode.
 
-```sh
-$ docker-compose up [-d]
-```
+  ```sh
+  $ docker-compose up [-d]
+  ```
 
 ### Contribute
 
