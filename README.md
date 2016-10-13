@@ -279,16 +279,16 @@ __`/api/v1/stop/<stop_id>`__
   $ npm install
   ```
 
-- Start redis.
+- Start Redis. Use `--daemonize yes` to run server in background.
 
   ```sh
   $ redis-server
   ```
 
-- Start the server.
+- Start the application server.
 
   ```sh
-  $ PORT=<port> HOST=<host> REDIS_URL=<redis_url> NODE_ENV=<env> npm start # use start:dev to watch for changes
+  $ PORT=<port> HOST=<host> REDIS_URL=<redis_url> NODE_ENV=<node_env> npm start # use start:dev to watch for changes
   ```
 
 #### Running with [Docker Compose](https://docs.docker.com/compose/)
@@ -303,10 +303,10 @@ __`/api/v1/stop/<stop_id>`__
   $ docker-compose build
   ```
 
-- Start/attach containers. Add `-d` to run in detached mode.
+- Start & attach containers. Add `-d` to run in detached mode (i.e. in the background).
 
   ```sh
-  $ docker-compose up [-d]
+  $ docker-compose up
   ```
 
 ### Contribute
