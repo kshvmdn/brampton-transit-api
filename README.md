@@ -297,13 +297,19 @@ __`/api/v1/stop/<stop_id>`__
 
 - [Clone repository](#clone-repo).
 
+- Change directory to `docker`.
+  
+  ```sh
+  $ cd docker
+  ```
+
 - Build containers.
 
   ```sh
   $ docker-compose build
   ```
 
-- Start & attach containers. Add `-d` to run in detached mode (i.e. in the background).
+- Start containers. Add `-d` to run in detached mode (i.e. in the background).
 
   ```sh
   $ docker-compose up

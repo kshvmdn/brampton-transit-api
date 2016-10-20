@@ -4,6 +4,7 @@ nginx:
     dockerfile: nginx.Dockerfile
     links:
         - node:node
+        - redis
     ports:
         - "80:80"
 
@@ -15,8 +16,6 @@ node:
         NODE_ENV: production
     ports:
         - "3001:3000"
-    links:
-        - redis
 
 redis:
     container_name: redis

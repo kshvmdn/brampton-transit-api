@@ -6,11 +6,11 @@ RUN npm install -g pm2 nodemon
 
 RUN mkdir -p /app
 
-ADD package.json /app/
+ADD ../package.json /app/
 RUN cd /app && \
     npm install
 
-ADD . /app
+ADD ../. /app
 WORKDIR /app
 
 EXPOSE 3000
