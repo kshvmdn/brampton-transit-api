@@ -297,8 +297,6 @@ __`/api/v1/stop/<stop_id>`__
 
 - [Clone repository](#clone-repo).
 
-- Change directory to `docker`.
-  
   ```sh
   $ cd docker
   ```
