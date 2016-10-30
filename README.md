@@ -4,17 +4,14 @@
 
 Live at [http://transit.kshvmdn.com](http://transit.kshvmdn.com) (give it a few seconds to spin up, it's running on Heroku's free tier).
 
-- [Scrapers](#scrapers)
+__Data source__: Brampton Transit Next Ride ([desktop](http://www.brampton.ca/EN/residents/transit/plan-your-trip/Pages/NextRide.aspx), [mobile](http://nextride.brampton.ca/mob/SearchBy.aspx)).
+
 - [Endpoints](#endpoints)
 - [Hosting](#hosting)
 - [Contribute](#contribute)
 - [License](#license)
 
 ---
-
-#### Scrapers
-
-- Data source: Brampton Transit Next Ride ([desktop](http://www.brampton.ca/EN/residents/transit/plan-your-trip/Pages/NextRide.aspx), [mobile](http://nextride.brampton.ca/mob/SearchBy.aspx)).
 
 ### Endpoints
 
