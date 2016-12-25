@@ -2,331 +2,437 @@
 
 > An unofficial API for retrieving live Brampton Transit bus times.
 
-Live at [http://transit.kshvmdn.com](http://transit.kshvmdn.com) (give it a few seconds to spin up, it's running on Heroku's free tier).
+Live at [http://transit.kshvmdn.com](http://transit.kshvmdn.com) (might take a few seconds to spin up, it's running on Heroku's free tier).
 
 __Data source__: Brampton Transit Next Ride ([desktop](http://www.brampton.ca/EN/residents/transit/plan-your-trip/Pages/NextRide.aspx), [mobile](http://nextride.brampton.ca/mob/SearchBy.aspx)).
 
-- [Endpoints](#endpoints)
-- [Hosting](#hosting)
+- [Usage](#usage)
+  + [Endpoints](#endpoints)
+  + [Hosting](#hosting)
 - [Contribute](#contribute)
 - [License](#license)
 
 ---
 
-### Endpoints
+### Usage
 
-__<a name="api-routes">`/api/v1/routes`</a>__
+  #### Endpoints
 
-- Fetch a list of Brampton Transit routes (see [_Find By Route_](http://nextride.brampton.ca/RealTime.aspx)).
-- Sample response:
+    - [`__/routes__`](http://transit.kshvmdn.com/api/v1/routes)
 
-  ```js
-  {
-    "data": [
-      {
-        "route_name": "Queen, West",
-        "route": "1"
-      },
-      {
-        "route_name": "Queen, East",
-        "route": "1"
-      },
-      {
-        "route_name": "Main, South",
-        "route": "2"
-      },
-      ...
-    ],
-    "meta": {
-      "message": "OK",
-      "status": 200
-    }
-  }
-  ```
-  
-__`/api/v1/search/stops/<query>`__
+      + Retrieve a list of routes. __Optionally__ filter by route code or name.
 
-- Search for a list of stops using `query`.
-- Sample response:
+      + Optional query parameters:
+        * `code` - Route code
+        * `name` - Route name (case insensitive)
 
-  ```js
-  // /api/v1/stops/search/bramalea
-  {
-    "data": [
-      {
-        "stop": "1113",
-        "stop_name": "Bramalea - Zum Steeles Station Stop"
-      },
-      {
-        "stop": "1114",
-        "stop_name": "Steeles Ave E at Bramalea GO Statio"
-      },
-      {
-        "stop": "1150",
-        "stop_name": "Kensington Rd opp Bramalea Medical"
-      },
-      ...
-    ],
-    "meta": {
-      "message": "OK",
-      "status": 200
-    }
-  }
-  ```
+      + Examples:
 
-__`/api/v1/stops`__
+        * [`/routes`](http://transit.kshvmdn.com/api/v1/routes)
 
-- Fetch a list of Brampton Transit stops (separated by [route](#api-routes), see [_Find By Route_](http://nextride.brampton.ca/RealTime.aspx)).
-- `stops` are sorted by order of occurence. Add `?sort=1` to sort by integer value.
-- Sample response:
-
-  ```js
-  {
-    "data": [
-      {
-        "route": "1",
-        "route_name": "Queen, West",
-        "stops": [
+          ```js
           {
-            "stop": "4035",
-            "stop_name": "Highway 50 - Zum Queen Station Stop"
-          },
+            "data": [
+              {
+                "route": "1",
+                "route_name": "Queen, West"
+              },
+              {
+                "route": "1",
+                "route_name": "Queen, East"
+              },
+              ...
+            ],
+            "status": {
+              "code": 200,
+              "message": "OK"
+            }
+          }
+          ```
+        
+        * [`/routes?code=2`](http://transit.kshvmdn.com/api/v1/routes?code=2)
+
+          ```js
           {
-            "stop": "2543",
-            "stop_name": "The Gore Rd n/of Queen St E"
-          },
+            "data": [
+              {
+                "route": "2",
+                "route_name": "Main, South"
+              },
+              {
+                "route": "2",
+                "route_name": "Main, North"
+              }
+            ],
+            "status": {
+              "code": 200,
+              "message": "OK"
+            }
+          }
+          ```
+
+        * [`/routes?name=bramalea`](http://transit.kshvmdn.com/api/v1/routes?name=bramalea)
+
+            ```js
+            {
+              "data": [
+                {
+                  "route": "15",
+                  "route_name": "Bramalea, South"
+                },
+                {
+                  "route": "15",
+                  "route_name": "Bramalea, North"
+                },
+                {
+                  "route": "92",
+                  "route_name": "Bramalea GO Shuttle, South"
+                },
+                {
+                  "route": "92",
+                  "route_name": "Bramalea GO Shuttle, North"
+                }
+              ],
+              "status": {
+                "code": 200,
+                "message": "OK"
+              }
+            }
+            ```
+
+    - [`__/stops__`](http://transit.kshvmdn.com/api/v1/stops)
+
+      + Retrieve a list of all stops separated by route.
+
+      + Examples:
+
+        * [`/stops`](http://transit.kshvmdn.com/api/v1/stop)
+
+          ```js
           {
-            "stop": "2544",
-            "stop_name": "The Gore Rd s/of Fogal Rd"
-          },
-          ...
-        ]
-      },
-      {
-        "route": "1",
-        "route_name": "Queen, East",
-        "stops": [
+            "data": [
+              {
+                "route_id": "1004",
+                "route": "1",
+                "route_name": "Queen, West",
+                "stops": [
+                  {
+                    "stop": "4035",
+                    "stop_name": "Highway 50 - Zum Queen Station Stop"
+                  },
+                  {
+                    "stop": "2543",
+                    "stop_name": "The Gore Rd n/of Queen St E"
+                  },
+                  ...
+                ]
+              },
+              {
+                "route_id": "1001",
+                "route": "1",
+                "route_name": "Queen, East",
+                "stops": [
+                  {
+                    "stop": "2315",
+                    "stop_name": "Mount Pleasant GO Station - Route 1"
+                  },
+                  {
+                    "stop": "2807",
+                    "stop_name": "Bovaird - Zum Queen West Station St"
+                  },
+                  ...
+                ]
+              },
+              ...
+            ],
+            "status": {
+              "code": 200,
+              "message": "OK"
+            }
+          }
+          ```
+
+    - [`__/stops/route__`](http://transit.kshvmdn.com/api/v1/routes)
+
+      + Retrieve a list of stops filtered by __route__. If you wish to retrieve all stops, use [`/stops`](#stops) instead. 
+
+      + Query parameters:
+        + `code` - Route code
+        + `name` - Route name (case insensitive)
+
+      + Examples:
+
+        * [`/stops/route`](http://transit.kshvmdn.com/api/v1/stops/route)
+
+          ```js
           {
-            "stop": "2315",
-            "stop_name": "Mount Pleasant GO Station - Route 1"
-          },
+            "error": {
+              "code": 400,
+              "message": "Expected at least one parameter."
+            }
+          }
+          ```
+
+        * [`/stops/route?name=torbram`](http://transit.kshvmdn.com/api/v1/stops/route?name=torbram)
+
+          ```js
           {
-            "stop": "2807",
-            "stop_name": "Bovaird - Zum Queen West Station St"
-          },
+            "data": [
+              {
+                "route_id": "14003",
+                "route": "14",
+                "route_name": "Torbram, South",
+                "stops": [
+                  {
+                    "stop": "3498",
+                    "stop_name": "Torbram Rd s/of Father Tobin Rd"
+                  },
+                  {
+                    "stop": "3499",
+                    "stop_name": "Torbram Rd at Australia Dr"
+                  },
+                  ...
+                ]
+              },
+              {
+                "route_id": "14002",
+                "route": "14",
+                "route_name": "Torbram, North",
+                "stops": [
+                  {
+                    "stop": "6157",
+                    "stop_name": "Westwood Mall Terminal Route 14 Sto"
+                  },
+                  {
+                    "stop": "6004",
+                    "stop_name": "Goreway Rd s/of Morning Star Dr"
+                  },
+                  ...
+                ]
+              }
+            ],
+            "status": {
+              "code": 200,
+              "message": "OK"
+            }
+          }
+          ```
+
+    - [`__/stops/stop__`](http://transit.kshvmdn.com/api/v1/routes)
+
+      + Retrieve a list of stops filtered by __stop__. If you wish to retrieve all stops, use [`/stops`](#stops) instead. 
+
+      + Query parameters:
+        + `code` - Stop code
+        + `name` - Stop name  (case insensitive)
+
+      + Examples:
+
+        * [`/stops/stop`](http://transit.kshvmdn.com/api/v1/stops/stop)
+
+          ```js
           {
-            "stop": "1007",
-            "stop_name": "Williams - Zum Queen West Station S"
-          },
-          ...
-        ]
-      },
-      ...
-    ],
-    "meta": {
-      "message": "OK",
-      "status": 200
-    }
-  }
-  ```
-  
-__`/api/v1/stops/<route_id>`__
+            "error": {
+              "code": 400,
+              "message": "Expected at least one parameter."
+            }
+          }
+          ```
 
-- Fetch a list of Brampton Transit stops for a single route.
-- `stops` are sorted by order of occurence. Add `?sort=1` to sort by integer value.
-- Sample response:
-  
-  ```js
-  // /api/v1/stops/511
-  {
-    "data": [
-      {
-        "route": "511",
-        "route_name": "Zum Steeles, West",
-        "stops": [
+        * [`/stops/stop?code=4035`](http://transit.kshvmdn.com/api/v1/stops/stop?code=4035)
+
+          ```js
           {
-            "stop": "4227",
-            "stop_name": "Humber College Terminal- Zum Steele"
-          },
+            "data": [
+              {
+                "route_id": "1004",
+                "route": "1",
+                "route_name": "Queen, West",
+                "stops": [
+                  {
+                    "stop": "4035",
+                    "stop_name": "Highway 50 - Zum Queen Station Stop"
+                  }
+                ]
+              },
+              {
+                "route_id": "1001",
+                "route": "1",
+                "route_name": "Queen, East",
+                "stops": [
+                  {
+                    "stop": "4035",
+                    "stop_name": "Highway 50 - Zum Queen Station Stop"
+                  }
+                ]
+              },
+              ...
+            ],
+            "status": {
+              "code": 200,
+              "message": "OK"
+            }
+          }
+          ```
+
+    - [`__/search/stops/:query__`](http://transit.kshvmdn.com/api/v1/search/stops/:query)
+
+      + Retrieve a list of stops matching the provided `query`.
+
+      + Examples:
+
+        * [`/search/stops/bramalea`](http://transit.kshvmdn.com/api/v1/search/stops/bramalea)
+
+          ```js
           {
-            "stop": "4112",
-            "stop_name": "Finch - Zum Steeles Station Stop WB"
-          },
+            "data": [
+              {
+                "stop": "1113",
+                "stop_name": "Bramalea - Zum Steeles Station Stop"
+              },
+              {
+                "stop": "1114",
+                "stop_name": "Steeles Ave E at Bramalea GO Statio"
+              },
+              {
+                "stop": "1150",
+                "stop_name": "Kensington Rd opp Bramalea Medical"
+              },
+              ...
+            ],
+            "status": {
+              "code": 200,
+              "message": "OK"
+            }
+          }
+          ```
+
+    - [`__/stop/:stop__`](http://transit.kshvmdn.com/api/v1/stop/:stop)
+
+      + Retrieve a list of upcoming busses at the given `stop`.
+
+      + Examples:
+
+        * [`/stop/1113`](http://transit.kshvmdn.com/api/v1/stop/1113)
+
+          ```js
           {
-            "stop": "1080",
-            "stop_name": "Goreway - Zum Steeles Station Stop "
-          },
-          ...
-        ]
-      }
-    ],
-    "meta": {
-      "message": "OK",
-      "status": 200
-    }
-  }
-  ```
+            "data": {
+              "stop": "1113",
+              "stop_name": "Bramalea - Zum Steeles Station Stop",
+              "routes": [
+                {
+                  "route": "511",
+                  "direction": "Zum Steeles WB",
+                  "eta": "07:26 PM"
+                },
+                {
+                  "route": "11",
+                  "direction": "Steeles WB-11A",
+                  "eta": "07:33 PM"
+                },
+                ...
+              ]
+            },
+            "status": {
+              "code": 200,
+              "message": "OK"
+            }
+          }
+          ```
 
-__`/api/v1/stop/<stop_id>`__
+        * [`/stop/2000`](http://transit.kshvmdn.com/api/v1/stop/2000)
 
-- Fetch a list of times for a given stop.
-- Add `?c=1` to merge `times` for matching routes.
-- Sample response:
+          ```js
+          {
+            "data": {
+              "stop": "2000",
+              "stop_name": "Trinity Common Terminal Route 33/23",
+              "routes": [
+                {
+                  "route": "23",
+                  "direction": "Sandalwood EB",
+                  "eta": "Due"
+                },
+                {
+                  "route": "23",
+                  "direction": "Sandalwood EB",
+                  "eta": "07:42 PM"
+                },
+                ...
+              ]
+            },
+            "status": {
+              "code": 200,
+              "message": "OK"
+            }
+          }
+          ```
 
-  ```js
-  // /api/v1/stop/1080
-  {
-    "data": {
-      "stop": "1080",
-      "stop_name": "Goreway - Zum Steeles Station Stop",
-      "routes": [
-        {
-          "route": "511",
-          "direction": "Zum Steeles WB",
-          "times": [
-            "12:15 PM"
-          ]
-        },
-        {
-          "route": "11",
-          "direction": "Steeles WB-11A",
-          "times": [
-            "12:24 PM"
-          ]
-        },
-        {
-          "route": "511",
-          "direction": "Zum Steeles WB",
-          "times": [
-            "12:35 PM"
-          ]
-        },
-        {
-          "route": "11",
-          "direction": "Steeles WB",
-          "times": [
-            "12:54 PM"
-          ]
-        },
-        {
-          "route": "511",
-          "direction": "Zum Steeles WB",
-          "times": [
-            "12:55 PM"
-          ]
-        }
-      ]
-    },
-    "meta": {
-      "status": 200,
-      "message": "OK"
-    }
-  }
-  ```
+  #### Hosting
 
-  ```js
-  // /api/v1/stop/1080?c=1
-  {
-    "data": {
-      "stop": "1080",
-      "stop_name": "Goreway - Zum Steeles Station Stop",
-      "routes": [
-        {
-          "route": "511",
-          "direction": "Zum Steeles WB",
-          "times": [
-            "12:15 PM",
-            "12:35 PM",
-            "12:55 PM"
-          ]
-        },
-        {
-          "route": "11",
-          "direction": "Steeles WB-11A",
-          "times": [
-            "12:24 PM"
-          ]
-        },
-        {
-          "route": "11",
-          "direction": "Steeles WB",
-          "times": [
-            "12:54 PM"
-          ]
-        }
-      ]
-    },
-    "meta": {
-      "status": 200,
-      "message": "OK"
-    }
-  }
-  ```
+    ##### Requirements
 
-### Hosting
+      - [Node.js](https://nodejs.org/en/) (v6+)
+      - [Redis](http://redis.io/)
+    
+    ##### Installation
 
-#### Requirements
+      - <a name="clone-repo"/>Clone repository.</a>
 
-- [Node.js](https://nodejs.org/en/) (`^v6`)
-- [Redis](http://redis.io/)
+        ```sh
+        $ git clone https://github.com/kshvmdn/brampton-transit-api.git brampton-transit-api && cd $_
+        ```
 
-#### Installation
+      - Install npm dependencies.
 
-- <a name="clone-repo"/>Clone repository.</a>
+        ```sh
+        $ npm install
+        ```
 
-  ```sh
-  $ git clone https://github.com/kshvmdn/brampton-transit-api.git brampton-transit-api && cd $_
-  ```
+      - Start Redis. Use `--daemonize yes` to run server in background.
 
-- Install npm dependencies.
+        ```sh
+        $ redis-server
+        ```
 
-  ```sh
-  $ npm install
-  ```
+      - Start the application server.
 
-- Start Redis. Use `--daemonize yes` to run server in background.
+        ```sh
+        $ PORT=<port> HOST=<host> REDIS_URL=<redis_url> NODE_ENV=<node_env> npm start # use start:dev to watch for changes
+        ```
 
-  ```sh
-  $ redis-server
-  ```
+    ##### Running with [Docker Compose](https://docs.docker.com/compose/)
 
-- Start the application server.
+      - Be sure to have Docker Compose [installed](https://docs.docker.com/compose/install/).
 
-  ```sh
-  $ PORT=<port> HOST=<host> REDIS_URL=<redis_url> NODE_ENV=<node_env> npm start # use start:dev to watch for changes
-  ```
+      - [Clone repository](#clone-repo).
 
-#### Running with [Docker Compose](https://docs.docker.com/compose/)
+        ```sh
+        $ cd docker
+        ```
 
-- Be sure to have Docker Compose [installed](https://docs.docker.com/compose/install/).
+      - Build containers.
 
-- [Clone repository](#clone-repo).
+        ```sh
+        $ docker-compose build
+        ```
 
-  ```sh
-  $ cd docker
-  ```
+      - Start containers. Add `-d` to run in detached mode (i.e. in the background).
 
-- Build containers.
-
-  ```sh
-  $ docker-compose build
-  ```
-
-- Start containers. Add `-d` to run in detached mode (i.e. in the background).
-
-  ```sh
-  $ docker-compose up
-  ```
+        ```sh
+        $ docker-compose up
+        ```
 
 ### Contribute
 
-This project is completely open source, feel free to [open an issue](https://github.com/kshvmdn/next-ride-api/issues) or [submit a PR](https://github.com/kshvmdn/next-ride-api/pulls). Refer to the [self-hosting](#self-hosting) guide to get started.
+  This project is completely open source, feel free to [open an issue](https://github.com/kshvmdn/next-ride-api/issues) or [submit a PR](https://github.com/kshvmdn/next-ride-api/pulls). Refer to the [self-hosting](#self-hosting) guide to get started. 
 
-Before submitting a PR, please ensure your changes comply with the [Standard](https://github.com/feross/standard) style guide for JavaScript code.
+  Before submitting a PR, please ensure your changes comply with the [Standard](https://github.com/feross/standard) style guide for JavaScript code.
 
-  ```sh
-  npm run test:lint
-  ```
+    ```sh
+    npm run test:lint
+    ```
 
 ### License
 
